@@ -1,0 +1,163 @@
+2026/11/04-16:27:18.609 9d264 Reusing MANIFEST /Users/dhara/GenAICourse/whatsapp_profile/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/11/04-16:27:18.611 9d264 Recovering log #367
+2026/11/04-16:27:18.876 9d264 Reusing old log /Users/dhara/GenAICourse/whatsapp_profile/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000367.log 
+2026/11/04-16:27:22.311 9d26d Level-0 table #383: started
+2026/11/04-16:27:22.368 9d26d Level-0 table #383: 1064078 bytes OK
+2026/11/04-16:27:22.380 9d26d Delete type=0 #367
+2026/11/04-16:27:22.598 9d26d Compacting 1@0 + 0@1 files
+2026/11/04-16:27:22.678 9d26d Generated table #384@0: 38039 keys, 615892 bytes
+2026/11/04-16:27:22.685 9d26d Generated table #385@0: 24 keys, 3977 bytes
+2026/11/04-16:27:22.685 9d26d Compacted 1@0 + 0@1 files => 619869 bytes
+2026/11/04-16:27:22.692 9d26d compacted to: files[ 0 2 12 0 0 0 0 ]
+2026/11/04-16:27:22.693 9d26d Delete type=2 #383
+2026/11/04-16:27:22.748 9d264 Compacting 1@1 + 9@2 files
+2026/11/04-16:27:22.824 9d264 Generated table #386@1: 29354 keys, 2190029 bytes
+2026/11/04-16:27:22.939 9d264 Generated table #387@1: 57360 keys, 2193775 bytes
+2026/11/04-16:27:23.068 9d264 Generated table #388@1: 110078 keys, 2262944 bytes
+2026/11/04-16:27:23.199 9d264 Generated table #389@1: 109487 keys, 2262509 bytes
+2026/11/04-16:27:23.289 9d264 Generated table #390@1: 45902 keys, 2203140 bytes
+2026/11/04-16:27:23.346 9d264 Generated table #391@1: 14289 keys, 2165453 bytes
+2026/11/04-16:27:23.403 9d264 Generated table #392@1: 1630 keys, 2148072 bytes
+2026/11/04-16:27:23.459 9d264 Generated table #393@1: 2745 keys, 2147305 bytes
+2026/11/04-16:27:23.637 9d264 Generated table #394@1: 27682 keys, 2251249 bytes
+2026/11/04-16:27:23.653 9d264 Generated table #395@1: 5187 keys, 396839 bytes
+2026/11/04-16:27:23.653 9d264 Compacted 1@1 + 9@2 files => 20221315 bytes
+2026/11/04-16:27:23.662 9d264 compacted to: files[ 0 1 13 0 0 0 0 ]
+2026/11/04-16:27:23.663 9d264 Delete type=2 #377
+2026/11/04-16:27:23.663 9d264 Delete type=2 #376
+2026/11/04-16:27:23.663 9d264 Delete type=2 #374
+2026/11/04-16:27:23.664 9d264 Delete type=2 #375
+2026/11/04-16:27:23.664 9d264 Delete type=2 #371
+2026/11/04-16:27:23.664 9d264 Delete type=2 #370
+2026/11/04-16:27:23.664 9d264 Delete type=2 #372
+2026/11/04-16:27:23.664 9d264 Delete type=2 #373
+2026/11/04-16:27:23.664 9d264 Delete type=2 #378
+2026/11/04-16:27:23.664 9d264 Delete type=2 #384
+2026/11/04-16:27:24.144 9d264 Compacting 1@1 + 2@2 files
+2026/11/04-16:27:24.190 9d264 Generated table #396@1: 13626 keys, 1215355 bytes
+2026/11/04-16:27:24.190 9d264 Compacted 1@1 + 2@2 files => 1215355 bytes
+2026/11/04-16:27:24.197 9d264 compacted to: files[ 0 0 12 0 0 0 0 ]
+2026/11/04-16:27:24.198 9d264 Delete type=2 #359
+2026/11/04-16:27:24.198 9d264 Delete type=2 #380
+2026/11/04-16:27:24.198 9d264 Delete type=2 #385
+2026/11/04-16:27:32.151 9d264 Level-0 table #398: started
+2026/11/04-16:27:32.185 9d264 Level-0 table #398: 1226161 bytes OK
+2026/11/04-16:27:32.194 9d264 Delete type=0 #382
+2026/11/04-16:27:32.197 9d264 Compacting 1@0 + 0@1 files
+2026/11/04-16:27:32.225 9d264 Generated table #399@0: 23982 keys, 602211 bytes
+2026/11/04-16:27:32.230 9d264 Generated table #400@0: 94 keys, 10914 bytes
+2026/11/04-16:27:32.230 9d264 Compacted 1@0 + 0@1 files => 613125 bytes
+2026/11/04-16:27:32.238 9d264 compacted to: files[ 0 2 12 0 0 0 0 ]
+2026/11/04-16:27:32.783 9d26d Compacting 1@1 + 11@2 files
+2026/11/04-16:27:32.840 9d26d Generated table #401@1: 33389 keys, 2194474 bytes
+2026/11/04-16:27:32.912 9d26d Generated table #402@1: 54532 keys, 2188794 bytes
+2026/11/04-16:27:33.010 9d26d Generated table #403@1: 109711 keys, 2263674 bytes
+2026/11/04-16:27:33.096 9d26d Generated table #404@1: 110458 keys, 2262716 bytes
+2026/11/04-16:27:33.163 9d26d Generated table #405@1: 46868 keys, 2203335 bytes
+2026/11/04-16:27:33.204 9d26d Generated table #406@1: 15101 keys, 2165378 bytes
+2026/11/04-16:27:33.235 9d26d Generated table #407@1: 1566 keys, 2145387 bytes
+2026/11/04-16:27:33.268 9d26d Generated table #408@1: 2043 keys, 2145908 bytes
+2026/11/04-16:27:33.337 9d26d Generated table #409@1: 26092 keys, 2248431 bytes
+2026/11/04-16:27:33.419 9d26d Generated table #410@1: 30103 keys, 2265182 bytes
+2026/11/04-16:27:33.437 9d26d Generated table #411@1: 2915 keys, 525291 bytes
+2026/11/04-16:27:33.437 9d26d Compacted 1@1 + 11@2 files => 22608570 bytes
+2026/11/04-16:27:33.445 9d26d compacted to: files[ 0 1 12 0 0 0 0 ]
+2026/11/04-16:27:33.446 9d26d Delete type=2 #388
+2026/11/04-16:27:33.446 9d26d Delete type=2 #389
+2026/11/04-16:27:33.446 9d26d Delete type=2 #399
+2026/11/04-16:27:33.446 9d26d Delete type=2 #398
+2026/11/04-16:27:33.446 9d26d Delete type=2 #395
+2026/11/04-16:27:33.446 9d26d Delete type=2 #394
+2026/11/04-16:27:33.446 9d26d Delete type=2 #393
+2026/11/04-16:27:33.446 9d26d Delete type=2 #387
+2026/11/04-16:27:33.447 9d26d Delete type=2 #379
+2026/11/04-16:27:33.447 9d26d Delete type=2 #386
+2026/11/04-16:27:33.447 9d26d Delete type=2 #392
+2026/11/04-16:27:33.447 9d26d Delete type=2 #390
+2026/11/04-16:27:33.447 9d26d Delete type=2 #391
+2026/11/04-16:27:46.622 9d264 Level-0 table #413: started
+2026/11/04-16:27:46.656 9d264 Level-0 table #413: 1083708 bytes OK
+2026/11/04-16:27:46.665 9d264 Delete type=0 #397
+2026/11/04-16:27:46.669 9d264 Compacting 1@1 + 4@2 files
+2026/11/04-16:27:46.728 9d264 Generated table #414@1: 33652 keys, 2194571 bytes
+2026/11/04-16:27:46.781 9d264 Generated table #415@1: 49525 keys, 2182765 bytes
+2026/11/04-16:27:46.865 9d264 Generated table #416@1: 109173 keys, 2263404 bytes
+2026/11/04-16:27:46.947 9d264 Generated table #417@1: 109823 keys, 2262246 bytes
+2026/11/04-16:27:46.975 9d264 Generated table #418@1: 22503 keys, 462018 bytes
+2026/11/04-16:27:46.975 9d264 Compacted 1@1 + 4@2 files => 9365004 bytes
+2026/11/04-16:27:46.985 9d264 compacted to: files[ 0 1 13 0 0 0 0 ]
+2026/11/04-16:27:46.986 9d264 Delete type=2 #404
+2026/11/04-16:27:46.986 9d264 Delete type=2 #413
+2026/11/04-16:27:46.986 9d264 Delete type=2 #403
+2026/11/04-16:27:46.986 9d264 Delete type=2 #402
+2026/11/04-16:27:46.986 9d264 Delete type=2 #401
+2026/11/04-16:27:56.680 9d26d Level-0 table #420: started
+2026/11/04-16:27:56.732 9d26d Level-0 table #420: 1096561 bytes OK
+2026/11/04-16:27:56.743 9d26d Delete type=0 #412
+2026/11/04-16:27:56.762 9d264 Compacting 1@0 + 1@1 files
+2026/11/04-16:27:56.810 9d264 Generated table #421@0: 40504 keys, 701714 bytes
+2026/11/04-16:27:56.814 9d264 Generated table #422@0: 98 keys, 12248 bytes
+2026/11/04-16:27:56.814 9d264 Compacted 1@0 + 1@1 files => 713962 bytes
+2026/11/04-16:27:56.822 9d264 compacted to: files[ 0 2 13 0 0 0 0 ]
+2026/11/04-16:27:56.823 9d264 Delete type=2 #400
+2026/11/04-16:27:56.823 9d264 Delete type=2 #420
+2026/11/04-16:27:56.828 9d264 Compacting 1@1 + 10@2 files
+2026/11/04-16:27:56.894 9d264 Generated table #423@1: 34258 keys, 2197713 bytes
+2026/11/04-16:27:56.949 9d264 Generated table #424@1: 40650 keys, 2171702 bytes
+2026/11/04-16:27:57.097 9d264 Generated table #425@1: 108612 keys, 2261285 bytes
+2026/11/04-16:27:57.248 9d264 Generated table #426@1: 109323 keys, 2262010 bytes
+2026/11/04-16:27:57.375 9d264 Generated table #427@1: 70934 keys, 2223081 bytes
+2026/11/04-16:27:57.444 9d264 Generated table #428@1: 42775 keys, 2203474 bytes
+2026/11/04-16:27:57.489 9d264 Generated table #429@1: 1227 keys, 2142509 bytes
+2026/11/04-16:27:57.535 9d264 Generated table #430@1: 2032 keys, 2155944 bytes
+2026/11/04-16:27:57.597 9d264 Generated table #431@1: 16221 keys, 2204777 bytes
+2026/11/04-16:27:57.634 9d264 Generated table #432@1: 10844 keys, 1061337 bytes
+2026/11/04-16:27:57.634 9d264 Compacted 1@1 + 10@2 files => 20883832 bytes
+2026/11/04-16:27:57.642 9d264 compacted to: files[ 0 1 13 0 0 0 0 ]
+2026/11/04-16:27:57.644 9d264 Delete type=2 #405
+2026/11/04-16:27:57.644 9d264 Delete type=2 #406
+2026/11/04-16:27:57.644 9d264 Delete type=2 #407
+2026/11/04-16:27:57.644 9d264 Delete type=2 #417
+2026/11/04-16:27:57.644 9d264 Delete type=2 #416
+2026/11/04-16:27:57.644 9d264 Delete type=2 #414
+2026/11/04-16:27:57.644 9d264 Delete type=2 #415
+2026/11/04-16:27:57.644 9d264 Delete type=2 #418
+2026/11/04-16:27:57.644 9d264 Delete type=2 #421
+2026/11/04-16:27:57.644 9d264 Delete type=2 #409
+2026/11/04-16:27:57.644 9d264 Delete type=2 #408
+2026/11/04-16:28:04.517 9d26d Level-0 table #434: started
+2026/11/04-16:28:04.548 9d26d Level-0 table #434: 1052423 bytes OK
+2026/11/04-16:28:04.559 9d26d Delete type=0 #419
+2026/11/04-16:28:05.532 9d264 Compacting 1@0 + 1@1 files
+2026/11/04-16:28:05.583 9d264 Generated table #435@0: 39601 keys, 641272 bytes
+2026/11/04-16:28:05.588 9d264 Generated table #436@0: 108 keys, 13172 bytes
+2026/11/04-16:28:05.588 9d264 Compacted 1@0 + 1@1 files => 654444 bytes
+2026/11/04-16:28:05.595 9d264 compacted to: files[ 0 2 13 0 0 0 0 ]
+2026/11/04-16:28:05.596 9d264 Delete type=2 #422
+2026/11/04-16:28:05.596 9d264 Delete type=2 #434
+2026/11/04-16:28:06.578 9d264 Compacting 1@1 + 11@2 files
+2026/11/04-16:28:06.633 9d264 Generated table #437@1: 34096 keys, 2196591 bytes
+2026/11/04-16:28:06.684 9d264 Generated table #438@1: 34460 keys, 2163244 bytes
+2026/11/04-16:28:06.771 9d264 Generated table #439@1: 108237 keys, 2259459 bytes
+2026/11/04-16:28:06.858 9d264 Generated table #440@1: 108630 keys, 2260766 bytes
+2026/11/04-16:28:06.935 9d264 Generated table #441@1: 88518 keys, 2241563 bytes
+2026/11/04-16:28:07.000 9d264 Generated table #442@1: 45416 keys, 2203865 bytes
+2026/11/04-16:28:07.029 9d264 Generated table #443@1: 1495 keys, 2146080 bytes
+2026/11/04-16:28:07.060 9d264 Generated table #444@1: 1899 keys, 2147358 bytes
+2026/11/04-16:28:07.102 9d264 Generated table #445@1: 11393 keys, 2177698 bytes
+2026/11/04-16:28:07.172 9d264 Generated table #446@1: 25093 keys, 2235537 bytes
+2026/11/04-16:28:07.230 9d264 Generated table #447@1: 21081 keys, 1554518 bytes
+2026/11/04-16:28:07.231 9d264 Compacted 1@1 + 11@2 files => 23586679 bytes
+2026/11/04-16:28:07.239 9d264 compacted to: files[ 0 1 13 0 0 0 0 ]
+2026/11/04-16:28:07.240 9d264 Delete type=2 #410
+2026/11/04-16:28:07.240 9d264 Delete type=2 #428
+2026/11/04-16:28:07.240 9d264 Delete type=2 #429
+2026/11/04-16:28:07.240 9d264 Delete type=2 #424
+2026/11/04-16:28:07.240 9d264 Delete type=2 #430
+2026/11/04-16:28:07.240 9d264 Delete type=2 #431
+2026/11/04-16:28:07.241 9d264 Delete type=2 #425
+2026/11/04-16:28:07.241 9d264 Delete type=2 #427
+2026/11/04-16:28:07.241 9d264 Delete type=2 #426
+2026/11/04-16:28:07.241 9d264 Delete type=2 #432
+2026/11/04-16:28:07.241 9d264 Delete type=2 #423
+2026/11/04-16:28:07.241 9d264 Delete type=2 #435
