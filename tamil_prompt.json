@@ -1,0 +1,68 @@
+{
+  "framework": "SCALE",
+  "project": "Tamil Culture Across Three Historical Periods",
+  "language": "English",
+  "output": {
+    "image_count": 3,
+    "images": "Generate three separate images, one for each prompt",
+    "aspect_ratio": "16:9",
+    "style": "Photorealistic cinematic historical reconstruction",
+    "quality": "Highly detailed, historically grounded, natural human proportions, realistic materials and textures",
+    "continuity": "Each image must depict its own historical period. Do not mix clothing, architecture, objects, or technology between centuries."
+  },
+  "scale_framework": {
+    "S": "Subject — identify the people, places, objects, and cultural elements to depict.",
+    "C": "Context — establish the historical century, region, and social background.",
+    "A": "Action — show believable daily life, work, rituals, or cultural activities.",
+    "L": "Lighting and Look — define cinematic lighting, composition, camera perspective, and visual treatment.",
+    "E": "Environment — describe the landscape, architecture, climate, and surrounding details."
+  },
+  "prompts": [
+    {
+      "image_id": "tamil_culture_01",
+      "period": "Sangam Age",
+      "timeframe": "Approximately 2nd century BCE to 3rd century CE",
+      "region": "Ancient Tamilakam, South India",
+      "S": "Tamil people of the Sangam Age, including farmers, fishermen, artisans, merchants, poets, and warriors. Depict period-appropriate clothing, hairstyles, ornaments, tools, and everyday objects.",
+      "C": "Reconstruct an ancient Tamil settlement during the Sangam era, drawing on the landscapes and social life described in Sangam literature. Include a historically plausible coastal or riverine trading settlement without presenting uncertain details as established fact.",
+      "A": "Show people engaged in ordinary life: trading goods, weaving, preparing food, farming, fishing, making pottery, and sharing music or poetry. Keep activities natural and respectful.",
+      "L": "Warm early-morning sunlight, cinematic wide composition, realistic skin tones, fine fabric and earth textures, documentary-level photorealism.",
+      "E": "A landscape inspired by the Tamil tinai regions: fertile fields, a river, palm trees, modest houses made from locally plausible materials, earthen paths, and a busy market area. Avoid modern buildings, plastic, electricity, and contemporary objects.",
+      "full_prompt": "Create a photorealistic, cinematic historical reconstruction of Tamilakam during the Sangam Age (approximately 2nd century BCE to 3rd century CE). Show an authentic ancient Tamil settlement with farmers, fishermen, artisans, merchants, and poets going about daily life. Include period-appropriate clothing, ornaments, pottery, trade goods, traditional dwellings, and a landscape inspired by the Tamil tinai regions. Use warm morning sunlight, natural human proportions, realistic materials, and richly detailed environmental storytelling. Avoid modern objects, anachronistic architecture, fantasy costumes, and unsupported historical claims. 16:9 wide frame."
+    },
+    {
+      "image_id": "tamil_culture_02",
+      "period": "Imperial Chola Period",
+      "timeframe": "10th to 11th century CE",
+      "region": "Chola Nadu, Tamil South India",
+      "S": "Tamil people in the Chola period, including temple sculptors, bronze workers, farmers, traders, musicians, dancers, priests, and royal officials. Use clothing, jewelry, tools, and objects appropriate to the period.",
+      "C": "Depict a flourishing Chola-era town with monumental Dravidian temple architecture. Use the Brihadisvara Temple at Thanjavur as architectural inspiration, while keeping the scene grounded in the 10th–11th century.",
+      "A": "Show artisans working on bronze sculptures, merchants exchanging goods, musicians and dancers performing, and townspeople participating in temple-related activities.",
+      "L": "Golden-hour sunlight illuminating carved granite, detailed stone textures, cinematic depth, balanced composition, realistic historical atmosphere.",
+      "E": "A monumental stone temple, sculptural details, traditional streets, artisan workshops, market stalls, oil lamps, and the surrounding Chola landscape. No modern vehicles, electric lights, or contemporary materials.",
+      "full_prompt": "Create a highly detailed photorealistic cinematic reconstruction of Tamil culture during the Imperial Chola period (10th–11th century CE). Feature monumental Dravidian stone temple architecture inspired by the Brihadisvara Temple at Thanjavur, with Tamil artisans, bronze sculptors, musicians, dancers, merchants, farmers, and townspeople. Show historically plausible clothing, jewelry, craft techniques, market activity, and temple surroundings. Golden-hour light should reveal the texture of carved granite and bronze. Keep the architecture, objects, and costumes period-appropriate. Avoid modern elements, fantasy embellishments, and anachronisms. 16:9 wide frame."
+    },
+    {
+      "image_id": "tamil_culture_03",
+      "period": "19th Century Tamil Nadu",
+      "timeframe": "Approximately 1800–1899 CE",
+      "region": "Tamil Nadu, South India",
+      "S": "Tamil families, farmers, weavers, potters, traders, artisans, and bullock-cart drivers. Depict clothing, hairstyles, jewelry, and occupations appropriate to different communities and the 19th century.",
+      "C": "Reconstruct a Tamil town or village during the 19th century, showing traditional social and economic life during the colonial era without making colonial imagery the sole focus.",
+      "A": "Show a lively village market, women drawing kolam, people weaving cotton, farmers working in fields, vendors selling produce, and bullock carts moving along a village road.",
+      "L": "Soft late-afternoon sunlight, warm earthy color palette, cinematic documentary framing, natural expressions, detailed textures and realistic historical photography aesthetics.",
+      "E": "Traditional Tamil houses with tiled roofs and courtyards, a village temple, market stalls, coconut and palmyra trees, agricultural fields, earthen roads, and period-appropriate transport. Avoid modern roads, cars, plastic, electric appliances, and contemporary clothing.",
+      "full_prompt": "Create a photorealistic cinematic historical reconstruction of everyday Tamil life in 19th-century Tamil Nadu (1800–1899 CE). Show a lively traditional village with Tamil families, farmers, weavers, potters, merchants, and artisans. Include tiled-roof houses, courtyards, kolam designs, cotton weaving, village markets, agricultural fields, bullock carts, and a small temple. Use historically plausible clothing, tools, household objects, and architecture. Capture warm late-afternoon sunlight, authentic human expressions, earthy colors, and richly detailed textures. Avoid modern vehicles, plastic, electricity, contemporary buildings, and anachronistic clothing. 16:9 wide frame."
+    }
+  ],
+  "negative_prompt": [
+    "Modern clothing or accessories",
+    "Cars, motorcycles, or modern roads",
+    "Electric lights, LED signs, or electronic devices",
+    "Plastic objects or modern packaging",
+    "Fantasy armor or fictional costumes",
+    "Mixed historical periods or anachronistic objects",
+    "Incorrect or gibberish text, logos, and watermarks",
+    "Cartoon style, low resolution, distorted anatomy, extra fingers, or duplicated people"
+  ]
+}
