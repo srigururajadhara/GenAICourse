@@ -1,0 +1,84 @@
+{
+  "title": "Tamil Nadu circa 1900 — SCALE Framework",
+  "period": {
+    "year": 1900,
+    "historical_context": "Tamil-speaking regions of the Madras Presidency, under British colonial rule",
+    "setting_type": "A historically inspired South Indian town street with nearby village life"
+  },
+  "framework": {
+    "Subject": {
+      "description": "Everyday Tamil people in the year 1900: men wearing traditional veshti and angavastram, women wearing handwoven cotton sarees, children in simple traditional clothing, a vegetable seller, a potter, and a bullock-cart driver.",
+      "details": [
+        "Natural, historically plausible faces and clothing",
+        "Handwoven cotton fabrics in muted earthy colours",
+        "Traditional jewellery used sparingly",
+        "No modern hairstyles, accessories, or synthetic-looking fabrics"
+      ]
+    },
+    "Composition": {
+      "camera_view": "Wide cinematic establishing shot at human eye level",
+      "framing": "A lively street scene with people in the foreground, tiled-roof houses and small shops in the middle ground, and a South Indian temple gopuram in the distant background",
+      "visual_layers": [
+        "Foreground: a woman carrying a brass water pot and a street vendor arranging vegetables",
+        "Middle ground: pedestrians, a bullock cart, a tea or provisions shop, and traditional houses",
+        "Background: temple architecture, palm trees, and a hazy rural skyline"
+      ],
+      "depth": "Natural atmospheric depth, realistic scale, documentary-style framing"
+    },
+    "Action": {
+      "description": "A normal morning in Tamil Nadu around 1900. People walk along the dusty street, a vendor sells fresh produce, a potter carries clay vessels, a bullock cart moves slowly, and neighbours converse outside their homes.",
+      "motion_details": [
+        "Bullocks walk at a calm pace",
+        "People move naturally without looking at the camera",
+        "A shopkeeper serves a customer",
+        "A woman adjusts the brass pot as she walks"
+      ]
+    },
+    "Location": {
+      "description": "A traditional Tamil town street in the Madras Presidency, circa 1900",
+      "environment": [
+        "Traditional South Indian tiled-roof houses",
+        "Lime-washed walls and wooden doors",
+        "A small roadside provisions shop",
+        "A distant Dravidian-style temple gopuram",
+        "Palm trees and a dusty unpaved street",
+        "Brass and clay household vessels"
+      ],
+      "historical_guardrails": [
+        "Do not depict modern Tamil Nadu state symbols or post-1947 Indian national flags",
+        "Avoid modern roads, vehicles, electric streetlights, concrete high-rises, mobile phones, and plastic items",
+        "Avoid presenting contemporary Chennai landmarks as they appear today"
+      ]
+    },
+    "Esthetic": {
+      "style": "Photorealistic historical reconstruction with the feel of an early 20th-century documentary photograph brought to life",
+      "lighting": "Soft golden early-morning sunlight with gentle atmospheric haze",
+      "colour_palette": [
+        "Terracotta",
+        "Faded indigo",
+        "Turmeric yellow",
+        "Earth brown",
+        "Off-white cotton",
+        "Muted palm green"
+      ],
+      "texture": "Subtle film grain, natural skin and fabric texture, weathered lime plaster, aged wood, and dusty ground",
+      "mood": "Authentic, calm, culturally rich, dignified, and observational"
+    }
+  },
+  "generation_prompt": "Create a historically inspired, photorealistic cinematic scene of Tamil Nadu around the year 1900, in the Tamil-speaking region of the Madras Presidency. Show an ordinary morning on a traditional town street: Tamil men in veshti and angavastram, women in handwoven cotton sarees, children, a vegetable seller, a potter, and a slowly moving bullock cart. Compose the scene as a wide eye-level establishing shot, with people and vendors in the foreground, lime-washed tiled-roof houses and small shops in the middle ground, and a traditional Dravidian temple gopuram with palm trees in the distance. Use soft golden morning light, dusty earth, brass and clay vessels, muted terracotta and indigo tones, realistic historical details, and subtle early-photography texture. The scene should feel like an authentic everyday moment, not a royal or fantasy depiction. Exclude modern vehicles, plastic, electric streetlights, mobile phones, concrete high-rises, contemporary clothing, and post-1947 national symbols.",
+  "negative_prompt": [
+    "Modern cars, buses, motorcycles, bicycles with modern styling",
+    "Electric streetlights, power lines, mobile phones, plastic objects",
+    "Modern concrete buildings, glass towers, paved highways",
+    "Contemporary fashion, synthetic fabrics, modern footwear",
+    "Post-1947 Indian national flags or modern state emblems",
+    "Fantasy costumes, exaggerated temple architecture, tourist-postcard styling",
+    "Modern Chennai skyline or present-day landmarks"
+  ],
+  "recommended_output": {
+    "image_aspect_ratio": "16:9",
+    "shot_type": "Wide establishing shot",
+    "visual_quality": "High-detail photorealism",
+    "historical_accuracy_note": "This is a representative creative reconstruction, not a claim that every Tamil region looked identical in 1900. Clothing, architecture, and daily life varied by community, occupation, wealth, and locality."
+  }
+}
