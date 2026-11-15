@@ -1,6 +1,16 @@
 {
   "documents": [
     {
+      "filename": "SCHEMES.pdf",
+      "state": "All India",
+      "category": "Government scheme",
+      "size_bytes": 5649054,
+      "uploaded_at": "2026-11-15T11:17:15.502685+00:00",
+      "pages": 296,
+      "chunks": 777,
+      "status": "Indexed"
+    },
+    {
       "filename": "pmkison.pdf",
       "state": "All India",
       "category": "Government scheme",
@@ -11,7 +21,7 @@
       "status": "Indexed"
     }
   ],
-  "updated_at": "2026-11-15T10:29:37.333834+00:00",
-  "total_pages": 6,
-  "total_chunks": 22
+  "updated_at": "2026-11-15T11:17:36.253261+00:00",
+  "total_pages": 302,
+  "total_chunks": 799
 }
