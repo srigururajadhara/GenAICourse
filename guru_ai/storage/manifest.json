@@ -1,0 +1,17 @@
+{
+  "documents": [
+    {
+      "filename": "pmkison.pdf",
+      "state": "All India",
+      "category": "Government scheme",
+      "size_bytes": 526672,
+      "uploaded_at": "2026-11-15T10:29:10.150809+00:00",
+      "pages": 6,
+      "chunks": 22,
+      "status": "Indexed"
+    }
+  ],
+  "updated_at": "2026-11-15T10:29:37.333834+00:00",
+  "total_pages": 6,
+  "total_chunks": 22
+}
