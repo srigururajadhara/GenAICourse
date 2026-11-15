@@ -1,0 +1,22 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Do not commit local documents or indexes
+data/pdfs/*
+!data/pdfs/.gitkeep
+storage/*
+!storage/.gitkeep
+logs/
+
+# Shared environment is outside this project; do not create a local one by default
+.venv/
+venv/
