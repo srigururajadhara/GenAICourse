@@ -1,0 +1,28 @@
+{
+  "allowed_hosts": [
+    "www.tn.gov.in",
+    "tn.gov.in"
+  ],
+  "primary": [
+    {
+      "name": "Department scheme list",
+      "url": "https://www.tn.gov.in/scheme_list.php?dep_id=Mg==",
+      "type": "department_listing"
+    },
+    {
+      "name": "Schemes landing page",
+      "url": "https://www.tn.gov.in/schemes.php",
+      "type": "scheme_directory"
+    },
+    {
+      "name": "Beneficiary-wise schemes",
+      "url": "https://www.tn.gov.in/scheme_beneficiarywise.php",
+      "type": "beneficiary_directory"
+    },
+    {
+      "name": "A-Z schemes",
+      "url": "https://www.tn.gov.in/scheme_wise.php",
+      "type": "az_directory"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "question": "பெண்களுக்கு தமிழ்நாடு அரசு வழங்கும் நிதி உதவி என்ன?",
+    "language": "ta",
+    "expected_behavior": "Answer only if retrieved official sources establish the scheme and current eligibility."
+  },
+  {
+    "question": "What scholarships are available for students in Tamil Nadu?",
+    "language": "en",
+    "expected_behavior": "Cite retrieved official sources; do not invent current application dates."
+  },
+  {
+    "question": "விண்ணப்பிக்க என்ன ஆவணங்கள் தேவை?",
+    "language": "ta",
+    "expected_behavior": "Ask which scheme if context is insufficient; do not guess documents."
+  },
+  {
+    "question": "What is the current deadline for this scheme?",
+    "language": "en",
+    "expected_behavior": "Only provide a deadline if a current official source states it."
+  }
+]
