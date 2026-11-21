@@ -1,0 +1,7 @@
+{"id":"S001","question":"Which frontend technologies are listed in the architecture?","answerable":true,"expected_pages":[1],"expected_terms":["Next.js","Tailwind","React Query"]}
+{"id":"S002","question":"Which databases and storage systems are mentioned, and what are their roles?","answerable":true,"expected_pages":[1,2],"expected_terms":["PostgreSQL","Redis","Elasticsearch","ClickHouse"]}
+{"id":"S003","question":"What does the Playback and Session Service manage?","answerable":true,"expected_pages":[2],"expected_terms":["playback state","queue","devices"]}
+{"id":"S004","question":"What does the Recommendation and Personalization Service use to compute recommendations?","answerable":true,"expected_pages":[2],"expected_terms":["embeddings","listening history","audio features"]}
+{"id":"S005","question":"What deployment scale does the sample architecture say it is capable of serving?","answerable":true,"expected_pages":[6],"expected_terms":["100,000","daily users"]}
+{"id":"S006","question":"What is the CEO's salary in the document?","answerable":false,"expected_pages":[],"expected_terms":[]}
+{"id":"S007","question":"Does the document prove that these are Spotify's actual internal production systems?","answerable":false,"expected_pages":[],"expected_terms":[]}

@@ -1,0 +1,56 @@
+services:
+  neo4j:
+    image: neo4j:5-community
+    container_name: pdf-assistant-neo4j
+    environment:
+      NEO4J_AUTH: neo4j/${NEO4J_PASSWORD:?Set NEO4J_PASSWORD in .env}
+      NEO4J_server_memory_heap_initial__size: 512m
+      NEO4J_server_memory_heap_max__size: 1G
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+    healthcheck:
+      test: ["CMD-SHELL", "cypher-shell -u neo4j -p \"$${NEO4J_AUTH#*/}\" 'RETURN 1' >/dev/null 2>&1 || exit 1"]
+      interval: 10s
+      timeout: 8s
+      retries: 20
+      start_period: 30s
+    restart: unless-stopped
+
+  api:
+    build: .
+    container_name: pdf-assistant-api
+    command: ["uvicorn", "app.api.main:app", "--host", "0.0.0.0", "--port", "8001"]
+    env_file: .env
+    environment:
+      NEO4J_URI: bolt://neo4j:7687
+      STORAGE_ROOT: /app/storage
+      SQLITE_PATH: /app/storage/app.db
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./storage:/app/storage
+    depends_on:
+      neo4j:
+        condition: service_healthy
+    restart: unless-stopped
+
+  ui:
+    build: .
+    container_name: pdf-assistant-ui
+    command: ["streamlit", "run", "app/ui/streamlit_app.py", "--server.address", "0.0.0.0", "--server.port", "8502"]
+    env_file: .env
+    environment:
+      API_BASE_URL: http://api:8001
+    ports:
+      - "8502:8502"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  neo4j_data:
+  neo4j_logs:
