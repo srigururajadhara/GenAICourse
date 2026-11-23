@@ -1,0 +1,40 @@
+# Private-by-default deployment. No public Traefik route is enabled here.
+# This configuration uses Neo4j AuraDB from .env; it does not start local Neo4j.
+services:
+  api:
+    build: .
+    container_name: pdf-assistant-api
+    command: ["uvicorn", "app.api.main:app", "--host", "0.0.0.0", "--port", "8001"]
+    env_file:
+      - .env
+    environment:
+      API_HOST: 0.0.0.0
+      API_PORT: "8001"
+      STORAGE_ROOT: /app/storage
+      SQLITE_PATH: /app/storage/app.db
+    ports:
+      - "127.0.0.1:8001:8001"
+    volumes:
+      - ./storage:/app/storage
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8001/health/live >/dev/null || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+
+  ui:
+    build: .
+    container_name: pdf-assistant-ui
+    command: ["streamlit", "run", "app/ui/streamlit_app.py", "--server.address", "0.0.0.0", "--server.port", "8502"]
+    env_file:
+      - .env
+    environment:
+      API_BASE_URL: http://api:8001
+    ports:
+      - "127.0.0.1:8502:8502"
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
