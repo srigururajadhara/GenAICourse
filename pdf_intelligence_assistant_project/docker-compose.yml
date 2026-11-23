@@ -7,8 +7,8 @@ services:
       NEO4J_server_memory_heap_initial__size: 512m
       NEO4J_server_memory_heap_max__size: 1G
     ports:
-      - "7474:7474"
-      - "7687:7687"
+      - "127.0.0.1:7474:7474"
+      - "127.0.0.1:7687:7687"
     volumes:
       - neo4j_data:/data
       - neo4j_logs:/logs
@@ -26,11 +26,10 @@ services:
     command: ["uvicorn", "app.api.main:app", "--host", "0.0.0.0", "--port", "8001"]
     env_file: .env
     environment:
-      NEO4J_URI: bolt://neo4j:7687
       STORAGE_ROOT: /app/storage
       SQLITE_PATH: /app/storage/app.db
     ports:
-      - "8001:8001"
+      - "127.0.0.1:8001:8001"
     volumes:
       - ./storage:/app/storage
     depends_on:
@@ -46,11 +45,28 @@ services:
     environment:
       API_BASE_URL: http://api:8001
     ports:
-      - "8502:8502"
+      - "127.0.0.1:8502:8502"
     depends_on:
       - api
+    networks:
+      - default
+      - traefik_net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=n8n_default"
+      - "traefik.http.routers.pdf-ui.rule=Host(`pdf.gurudhara.sbs`)"
+      - "traefik.http.routers.pdf-ui.entrypoints=websecure"
+      - "traefik.http.routers.pdf-ui.tls=true"
+      - "traefik.http.routers.pdf-ui.tls.certresolver=mytlschallenge"
+      - "traefik.http.services.pdf-ui.loadbalancer.server.port=8502"
     restart: unless-stopped
 
 volumes:
   neo4j_data:
   neo4j_logs:
+
+networks:
+  traefik_net:
+    name: n8n_default
+    external: true
+
