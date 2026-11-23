@@ -8,7 +8,6 @@ import requests
 import streamlit as st
 
 API_BASE = os.getenv("API_BASE_URL", "http://localhost:8001").rstrip("/")
-DEFAULT_API_KEY = os.getenv("PDF_ASSISTANT_API_KEY", "local-dev-key-change-before-deployment")
 TIMEOUT = (10, 180)
 
 st.set_page_config(
@@ -17,6 +16,30 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+# Public authentication through Keycloak.
+if not st.user.is_logged_in:
+    st.title("📘 Guru PDF Intelligence")
+    st.subheader("Your personal AI document workspace")
+    st.write("Sign in to upload PDFs, generate summaries and ask questions.")
+    st.button(
+        "Continue with Google or email",
+        on_click=st.login,
+        args=["keycloak"],
+        type="primary",
+        use_container_width=True,
+    )
+    st.caption("Choose Google or email/password on the secure sign-in page.")
+    st.stop()
+
+try:
+    ACCESS_TOKEN = st.user.tokens["access"]
+except (KeyError, TypeError, AttributeError):
+    st.error("Your login session has no API access token. Please sign in again.")
+    if st.button("Sign in again"):
+        st.logout()
+    st.stop()
+
 
 # Streamlit-native light theme is configured in .streamlit/config.toml. These
 # targeted rules style custom surfaces without globally overriding widget text.
@@ -65,15 +88,259 @@ st.markdown(
       [data-testid="stFileUploader"] { background:#fff; border:1px dashed #a8b7d4; border-radius:14px; padding:10px; }
       [data-testid="stExpander"] { background:#fff; border:1px solid var(--line); border-radius:12px; }
       div[role="radiogroup"] label { color:#263247 !important; }
+      /* Refined light theme for Streamlit controls */
+      .stButton > button:not([kind="primary"]),
+      .stDownloadButton > button {
+        background:#fff !important; color:#334155 !important;
+        border:1px solid #cbd5e1 !important; border-radius:10px !important;
+        font-weight:600 !important; min-height:2.55rem;
+      }
+      .stButton > button:not([kind="primary"]):hover,
+      .stDownloadButton > button:hover {
+        background:#f1f5f9 !important; border-color:#94a3b8 !important;
+        color:#172033 !important;
+      }
+      .stButton > button[kind="primary"] {
+        background:#3157d5 !important; border:1px solid #3157d5 !important;
+        color:#fff !important; border-radius:10px !important; font-weight:650 !important;
+      }
+      .stButton > button[kind="primary"]:hover {
+        background:#2445b5 !important; border-color:#2445b5 !important;
+      }
+      [data-testid="stFileUploader"] {
+        background:#fff !important; border:1px dashed #93a9d5 !important;
+        border-radius:14px !important; padding:12px !important;
+      }
+      [data-testid="stFileUploader"] section {
+        background:#f8faff !important; border:1px dashed #c4d2ea !important;
+        border-radius:10px !important;
+      }
+      [data-testid="stFileUploader"] *,
+      [data-testid="stFileUploaderDropzone"] * { color:#263247 !important; }
+      [data-testid="stFileUploader"] button {
+        background:#fff !important; color:#3157d5 !important;
+        border:1px solid #cbd5e1 !important;
+      }
+      [data-testid="stChatInput"] {
+        background:#fff !important; border:1px solid #cbd5e1 !important;
+        border-radius:13px !important; box-shadow:0 2px 8px rgba(15,23,42,.05);
+      }
+      [data-testid="stChatInput"] textarea {
+        background:#fff !important; color:#172033 !important; caret-color:#3157d5 !important;
+      }
+      [data-testid="stChatInput"] textarea::placeholder {
+        color:#94a3b8 !important; opacity:1 !important;
+      }
+      [data-testid="stAlert"] { border-radius:12px !important; border:1px solid #e2e8f0 !important; }
+      [data-testid="stAlert"] p { color:#263247 !important; }
+      [data-testid="stSidebar"] { background:#fff !important; border-right:1px solid #e2e8f0 !important; }
+      [data-testid="stSidebar"] p, [data-testid="stSidebar"] label { color:#334155 !important; }
+      [data-testid="stChatMessage"] {
+        background:#fff !important; border:1px solid #e2e8f0 !important;
+        border-radius:14px !important; padding:14px 16px !important;
+      }
+      /* Final contrast fixes for uploader, primary actions, and sidebar radio navigation */
+      [data-testid="stFileUploaderFile"],
+      [data-testid="stFileUploaderFile"] > div,
+      [data-testid="stFileUploaderFile"] [data-testid],
+      [data-testid="stFileUploader"] [data-testid="stFileUploaderFile"] {
+        background:#f1f5f9 !important;
+        color:#172033 !important;
+        border-color:#cbd5e1 !important;
+      }
+      [data-testid="stFileUploaderFile"] p,
+      [data-testid="stFileUploaderFile"] span,
+      [data-testid="stFileUploaderFile"] small,
+      [data-testid="stFileUploaderFile"] div {
+        color:#263247 !important;
+      }
+      [data-testid="stFileUploaderFile"] svg { color:#475569 !important; fill:currentColor !important; }
+      /* Strong override for the selected-file chip in Streamlit's uploader.
+         Streamlit versions may use different nested test IDs/classes here. */
+      [data-testid="stFileUploader"] [data-testid*="File"],
+      [data-testid="stFileUploader"] [class*="uploadedFile"],
+      [data-testid="stFileUploader"] .uploadedFile,
+      [data-testid="stFileUploader"] [aria-label*="file"] {
+        background:#f1f5f9 !important;
+        background-color:#f1f5f9 !important;
+        color:#172033 !important;
+        border-color:#cbd5e1 !important;
+        box-shadow:none !important;
+      }
+      [data-testid="stFileUploader"] [data-testid*="File"] *,
+      [data-testid="stFileUploader"] [class*="uploadedFile"] *,
+      [data-testid="stFileUploader"] .uploadedFile * {
+        color:#263247 !important;
+        -webkit-text-fill-color:#263247 !important;
+      }
+      [data-testid="stFileUploader"] [data-testid*="File"] svg,
+      [data-testid="stFileUploader"] [class*="uploadedFile"] svg {
+        color:#475569 !important;
+        fill:currentColor !important;
+      }
+      [data-testid="stFileUploader"] [data-testid="stFileUploaderDropzone"] {
+        background:#f8faff !important;
+      }
+      [data-testid="stFileUploader"] [data-testid="stFileUploaderDropzone"] button {
+        background:#fff !important; color:#3157d5 !important;
+      }
+      [data-testid="stFileUploader"] [data-testid="stFileUploaderDropzone"] button p,
+      [data-testid="stFileUploader"] [data-testid="stFileUploaderDropzone"] button span {
+        color:#3157d5 !important;
+      }
+      .stButton > button[kind="primary"],
+      .stButton > button[kind="primary"] p,
+      .stButton > button[kind="primary"] span,
+      .stButton > button[kind="primary"] div {
+        color:#fff !important;
+      }
+      [data-testid="stRadio"] [role="radiogroup"] label {
+        color:#263247 !important;
+      }
+      [data-testid="stRadio"] [data-baseweb="radio"] > div:first-child {
+        background:#fff !important;
+        border:2px solid #94a3b8 !important;
+        box-shadow:none !important;
+      }
+      [data-testid="stRadio"] [data-baseweb="radio"] > div:last-child {
+        color:#263247 !important;
+      }
+      [data-testid="stRadio"] label:has(input:checked) [data-baseweb="radio"] > div:first-child {
+        border-color:#3157d5 !important;
+      }
+      [data-testid="stRadio"] label:has(input:checked) [data-baseweb="radio"] > div:first-child > div {
+        background:#3157d5 !important;
+      }
+      /* Clear, readable status messages (including duplicate-upload warnings) */
+      [data-testid="stAlert"],
+      [data-testid="stAlert"] [data-baseweb="notification"],
+      [role="alert"] {
+        background:#fff7ed !important;
+        border:1px solid #fed7aa !important;
+        border-radius:12px !important;
+        color:#7c2d12 !important;
+      }
+      [data-testid="stAlert"] p,
+      [data-testid="stAlert"] div,
+      [data-testid="stAlert"] span,
+      [role="alert"] p,
+      [role="alert"] div,
+      [role="alert"] span {
+        color:#7c2d12 !important;
+      }
+      /* Keep Streamlit's fixed bottom chat composer light instead of black */
+      [data-testid="stBottom"],
+      [data-testid="stBottom"] > div,
+      [data-testid="stBottom"] [data-testid="stChatInput"],
+      [data-testid="stChatInput"] > div,
+      [data-testid="stChatInput"] > div > div {
+        background:#ffffff !important;
+        color:#172033 !important;
+        border-color:#cbd5e1 !important;
+        box-shadow:none !important;
+      }
+      [data-testid="stBottom"] {
+        background:rgba(245,247,251,.98) !important;
+        border-top:1px solid #e2e8f0 !important;
+      }
+      [data-testid="stChatInput"] textarea,
+      [data-testid="stChatInput"] textarea:focus {
+        background:#ffffff !important;
+        color:#172033 !important;
+        -webkit-text-fill-color:#172033 !important;
+        caret-color:#3157d5 !important;
+      }
+      [data-testid="stChatInput"] textarea::placeholder {
+        color:#64748b !important;
+        -webkit-text-fill-color:#64748b !important;
+        opacity:1 !important;
+      }
+      [data-testid="stChatInput"] button {
+        background:#3157d5 !important;
+        color:#ffffff !important;
+        border:1px solid #3157d5 !important;
+      }
+      [data-testid="stChatInput"] button svg {
+        fill:#ffffff !important;
+        color:#ffffff !important;
+      }
+      /* Page-level alignment and readable native Streamlit widgets */
+      /* Active PDF picker: prevent the selected filename/status from clipping */
+      [data-testid="stSelectbox"] { width:100% !important; margin:0 0 1rem !important; }
+      [data-testid="stSelectbox"] [data-baseweb="select"] {
+        width:100% !important; min-height:52px !important;
+      }
+      [data-testid="stSelectbox"] [data-baseweb="select"] > div {
+        display:flex !important; align-items:center !important;
+        min-height:52px !important; height:auto !important;
+        box-sizing:border-box !important; padding:4px 12px !important;
+        background:#ffffff !important; color:#172033 !important;
+        border:1px solid #cbd5e1 !important; border-radius:12px !important;
+        box-shadow:0 1px 2px rgba(15,23,42,.04) !important;
+      }
+      [data-testid="stSelectbox"] [data-baseweb="select"] *,
+      [data-testid="stSelectbox"] [data-baseweb="select"] input,
+      [data-testid="stSelectbox"] [data-baseweb="select"] span,
+      [data-testid="stSelectbox"] [data-baseweb="select"] div {
+        color:#172033 !important; -webkit-text-fill-color:#172033 !important;
+        font-size:14px !important; line-height:1.5 !important;
+        opacity:1 !important;
+      }
+      [data-testid="stSelectbox"] [data-baseweb="select"] svg {
+        color:#475569 !important; fill:#475569 !important;
+      }
+      .active-document-heading {
+        color:#475569; font-size:.76rem; font-weight:750;
+        letter-spacing:.07em; text-transform:uppercase; margin:0 0 6px;
+      }
+      [data-testid="stRadio"] [role="radiogroup"] {
+        display:flex !important; flex-wrap:wrap !important; gap:10px !important;
+      }
+      [data-testid="stRadio"] [role="radiogroup"] label {
+        background:#ffffff !important; border:1px solid #cbd5e1 !important;
+        border-radius:10px !important; padding:9px 16px !important;
+        min-height:42px !important; margin:0 !important;
+      }
+      [data-testid="stRadio"] [role="radiogroup"] label p {
+        color:#263247 !important; font-weight:600 !important;
+      }
+      [data-testid="stRadio"] [role="radiogroup"] label:has(input:checked) {
+        background:#edf2ff !important; border-color:#3157d5 !important;
+      }
+      [data-testid="stRadio"] [role="radiogroup"] label:has(input:checked) p {
+        color:#2445b5 !important;
+      }
+      [data-testid="stVerticalBlockBorderWrapper"] {
+        border-color:#dbe3ef !important; border-radius:16px !important;
+      }
+      [data-testid="stAlert"] [data-testid="stMarkdownContainer"] p { color:inherit !important; }
+      .doc-detail-panel {
+        background:#ffffff; border:1px solid #dbe3ef; border-radius:16px;
+        padding:20px 22px; margin-top:8px; color:#172033;
+      }
+      .doc-ready-banner {
+        background:#ecfdf3; border:1px solid #a7f3d0; color:#166534;
+        border-radius:12px; padding:13px 16px; font-weight:600; margin-top:12px;
+      }
+      .summary-panel {
+        background:#ffffff; border:1px solid #dbe3ef; border-radius:16px;
+        padding:22px 24px; margin:12px 0 20px;
+      }
+      .summary-document { color:#172033; font-weight:700; overflow-wrap:anywhere; margin-bottom:14px; }
+      @media (min-width: 900px) {
+        .block-container { max-width:1280px; padding-left:3rem; padding-right:3rem; }
+      }
+      @media (max-width: 700px) {
+        .hero { padding:20px; } .hero-title { font-size:1.55rem; }
+        .summary-panel { padding:16px; }
+        [data-testid="stRadio"] [role="radiogroup"] label { padding:8px 12px !important; }
+      }
       hr { border-color:#e2e8f0; }
-      @media (max-width: 700px) { .hero { padding:20px; } .hero-title { font-size:1.55rem; } }
     </style>
     """,
     unsafe_allow_html=True,
 )
 
-if "api_key" not in st.session_state:
-    st.session_state.api_key = DEFAULT_API_KEY
 if "selected_document" not in st.session_state:
     st.session_state.selected_document = None
 if "messages" not in st.session_state:
@@ -90,7 +357,7 @@ if "pending_page" in st.session_state:
 
 
 def auth_headers() -> dict[str, str]:
-    return {"Authorization": f"Bearer {st.session_state.api_key}"}
+    return {"Authorization": f"Bearer {ACCESS_TOKEN}"}
 
 
 def api_request(method: str, path: str, **kwargs: Any) -> requests.Response:
@@ -148,7 +415,11 @@ def render_document_picker(documents: list[dict[str, Any]]) -> dict[str, Any] | 
         st.session_state.selected_document = current
     labels = {f"{doc['file_name']}  ·  {status_label(doc['status'])}": doc["document_id"] for doc in documents}
     selected_label = next(label for label, doc_id in labels.items() if doc_id == current)
-    chosen = st.selectbox("Active document", list(labels), index=list(labels).index(selected_label), label_visibility="collapsed")
+    st.markdown('<div class="active-document-heading">Selected PDF · status</div>', unsafe_allow_html=True)
+    chosen = st.selectbox(
+        "Active document", list(labels), index=list(labels).index(selected_label),
+        label_visibility="collapsed", key="active_document_picker",
+    )
     st.session_state.selected_document = labels[chosen]
     return by_id[labels[chosen]]
 
@@ -183,9 +454,14 @@ with st.sidebar:
             except requests.RequestException as exc:
                 st.error(f"Upload failed: {exc}")
     st.divider()
+    st.markdown("##### ACCOUNT")
+    st.caption(st.user.get("email", "Signed in"))
+    if st.button("Sign out", use_container_width=True):
+        st.logout()
+
+    st.divider()
     st.markdown("##### CONNECTION")
-    with st.expander("API access settings", expanded=False):
-        st.text_input("Workspace API key", type="password", key="api_key", help="Your key is sent only to your configured PDF Assistant API.")
+    with st.expander("Backend connection", expanded=False):
         st.caption(f"API endpoint: {API_BASE}")
         if st.button("Test connection", use_container_width=True):
             try:
@@ -208,7 +484,7 @@ except requests.RequestException as exc:
     documents, api_error = [], str(exc)
 
 if api_error:
-    st.markdown('<div class="hero"><div class="hero-kicker">Workspace connection</div><div class="hero-title">Connect to your document workspace</div><div class="hero-copy">The interface is ready, but the backend could not load your documents. Check the API service and workspace access key.</div></div>', unsafe_allow_html=True)
+    st.markdown('<div class="hero"><div class="hero-kicker">Workspace connection</div><div class="hero-title">Connect to your document workspace</div><div class="hero-copy">The interface is ready, but the backend could not load your documents. Check the API service and your authentication session.</div></div>', unsafe_allow_html=True)
     st.error(api_error)
     st.stop()
 
@@ -278,7 +554,7 @@ elif page == "My documents":
             detail_response = api_request("GET", f"/api/v1/documents/{selected_doc['document_id']}")
             if detail_response.ok:
                 detail = detail_response.json()
-                st.write(f"**{detail['file_name']}** · {status_label(detail['status'])}")
+                st.markdown(f"**{detail['file_name']}** · {status_label(detail['status'])}")
                 if detail["status"] in {"UPLOADED", "EXTRACTING", "INDEXING_VECTOR", "INDEXING_GRAPH", "EXTRACTION_APPROVED_PENDING_INDEX"}:
                     st.info("Analysis is running. Refresh this page shortly to check progress.")
                     if st.button("Refresh status"):
@@ -306,7 +582,8 @@ elif page == "My documents":
                             st.rerun()
                         st.error(response_error(retry))
                 else:
-                    st.success("Document is ready for questions and summaries.")
+                    st.markdown('<div class="doc-ready-banner">✓ Document is ready for questions and summaries.</div>', unsafe_allow_html=True)
+
 
 elif page == "AI chat":
     st.title("Chat with your PDF")
@@ -365,21 +642,22 @@ elif page == "Smart summary":
     elif not is_ready(selected_doc):
         st.warning("Summary generation becomes available after document analysis is complete.")
     else:
-        st.markdown(f"**Document:** {selected_doc['file_name']}")
-        mode = st.segmented_control("Summary style", ["Executive", "Detailed", "Section"], default="Executive")
-        section = st.text_input("Section heading", placeholder="Enter the section heading") if mode == "Section" else None
-        if st.button("Generate summary", type="primary", disabled=(mode == "Section" and not section)):
-            with st.spinner("Reading the indexed document and preparing a summary…"):
-                try:
-                    result = api_request("POST", "/api/v1/summaries", json={
-                        "document_id": selected_doc["document_id"], "mode": mode.lower(), "section": section,
-                    })
-                    if result.ok:
-                        st.session_state.summaries[f"{selected_doc['document_id']}:{mode}:{section or ''}"] = result.json()
-                    else:
-                        st.error(response_error(result))
-                except requests.RequestException as exc:
-                    st.error(f"Summary request failed: {exc}")
+        with st.container(border=True):
+            st.markdown(f"**Document:** {selected_doc['file_name']}")
+            mode = st.radio("Summary style", ["Executive", "Detailed", "Section"], index=0, horizontal=True, key="summary_style")
+            section = st.text_input("Section heading", placeholder="Enter the section heading") if mode == "Section" else None
+            if st.button("Generate summary", type="primary", disabled=(mode == "Section" and not section)):
+                with st.spinner("Reading the indexed document and preparing a summary…"):
+                    try:
+                        result = api_request("POST", "/api/v1/summaries", json={
+                            "document_id": selected_doc["document_id"], "mode": mode.lower(), "section": section,
+                        })
+                        if result.ok:
+                            st.session_state.summaries[f"{selected_doc['document_id']}:{mode}:{section or ''}"] = result.json()
+                        else:
+                            st.error(response_error(result))
+                    except requests.RequestException as exc:
+                        st.error(f"Summary request failed: {exc}")
         key = f"{selected_doc['document_id']}:{mode}:{section or ''}"
         summary = st.session_state.summaries.get(key)
         if summary:

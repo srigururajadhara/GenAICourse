@@ -46,6 +46,12 @@ class Settings:
     neo4j_database: str = os.getenv("NEO4J_DATABASE", "neo4j")
     api_keys_json: str = os.getenv("API_KEYS_JSON", "")
 
+    # Authentication configuration
+    auth_mode: str = os.getenv("AUTH_MODE", "api_key").strip().lower()
+    keycloak_issuer: str = os.getenv("KEYCLOAK_ISSUER", "").strip()
+    keycloak_audience: str = os.getenv("KEYCLOAK_AUDIENCE", "").strip()
+    keycloak_jwks_url: str = os.getenv("KEYCLOAK_JWKS_URL", "").strip()
+
     def api_key_map(self) -> dict[str, str]:
         """Return API-key-to-workspace mapping. Secrets are never logged."""
         if self.api_keys_json.strip():

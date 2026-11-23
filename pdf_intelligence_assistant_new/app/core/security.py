@@ -7,6 +7,11 @@ from dataclasses import dataclass
 from fastapi import Header, HTTPException, status
 
 from app.core.config import settings
+from app.core.oidc import verify_access_token
+from app.services.user_repository import get_or_create_user_workspace
+
+import jwt
+from jwt import PyJWKClientError
 
 
 @dataclass(frozen=True)
@@ -16,16 +21,68 @@ class Principal:
 
 def resolve_principal(authorization: str | None) -> Principal:
     if not authorization or not authorization.startswith("Bearer "):
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Bearer API key required")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Bearer token required",
+        )
+
     supplied = authorization.removeprefix("Bearer ").strip()
+
+    if settings.auth_mode == "api_key":
+        try:
+            key_map = settings.api_key_map()
+        except (ValueError, TypeError) as exc:
+            raise HTTPException(
+                status_code=500,
+                detail="Authentication configuration is invalid",
+            ) from exc
+
+        for configured_key, workspace_id in key_map.items():
+            if secrets.compare_digest(supplied, configured_key):
+                return Principal(workspace_id=workspace_id)
+
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid API key",
+        )
+
+    if settings.auth_mode != "oidc":
+        raise HTTPException(
+            status_code=500,
+            detail="Unsupported authentication mode",
+        )
+
     try:
-        key_map = settings.api_key_map()
-    except (ValueError, TypeError) as exc:
-        raise HTTPException(status_code=500, detail="Authentication configuration is invalid") from exc
-    for configured_key, workspace_id in key_map.items():
-        if secrets.compare_digest(supplied, configured_key):
-            return Principal(workspace_id=workspace_id)
-    raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid API key")
+        claims = verify_access_token(
+            supplied,
+            settings.keycloak_issuer,
+            settings.keycloak_audience,
+            settings.keycloak_jwks_url,
+        )
+    except PyJWKClientError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Identity provider signing keys are unavailable",
+        ) from exc
+    except (jwt.InvalidTokenError, ValueError) as exc:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid or expired access token",
+        ) from exc
+
+    try:
+        workspace_id = get_or_create_user_workspace(
+            keycloak_sub=claims["sub"],
+            email=claims.get("email"),
+            display_name=claims.get("name"),
+        )
+    except Exception as exc:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="User workspace service is temporarily unavailable",
+        ) from exc
+
+    return Principal(workspace_id=workspace_id)
 
 
 def get_principal(authorization: str | None = Header(default=None)) -> Principal:

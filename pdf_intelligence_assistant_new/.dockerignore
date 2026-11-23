@@ -1,0 +1,18 @@
+# Secrets and environment files
+.env
+.env.*
+!.env.example
+.streamlit/
+*.pem
+*.key
+
+# Git and Python local files
+.git/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Runtime data and logs
+storage/
+*.log

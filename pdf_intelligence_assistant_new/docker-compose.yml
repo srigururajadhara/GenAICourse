@@ -1,9 +1,7 @@
-# Private-by-default deployment. No public Traefik route is enabled here.
-# This configuration uses Neo4j AuraDB from .env; it does not start local Neo4j.
 services:
   api:
     build: .
-    container_name: pdf-assistant-api
+    container_name: pdf-assistant-api-v2
     command: ["uvicorn", "app.api.main:app", "--host", "0.0.0.0", "--port", "8001"]
     env_file:
       - .env
@@ -13,7 +11,7 @@ services:
       STORAGE_ROOT: /app/storage
       SQLITE_PATH: /app/storage/app.db
     ports:
-      - "127.0.0.1:8001:8001"
+      - "127.0.0.1:18001:8001"
     volumes:
       - ./storage:/app/storage
     healthcheck:
@@ -22,19 +20,98 @@ services:
       timeout: 5s
       retries: 5
       start_period: 30s
+    depends_on:
+      postgres:
+        condition: service_healthy
     restart: unless-stopped
 
   ui:
     build: .
-    container_name: pdf-assistant-ui
+    container_name: pdf-assistant-ui-v2
     command: ["streamlit", "run", "app/ui/streamlit_app.py", "--server.address", "0.0.0.0", "--server.port", "8502"]
     env_file:
       - .env
     environment:
       API_BASE_URL: http://api:8001
     ports:
-      - "127.0.0.1:8502:8502"
+      - "127.0.0.1:18502:8502"
+    volumes:
+      - ./.streamlit/secrets.toml:/app/.streamlit/secrets.toml:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=n8n_default"
+      - "traefik.http.routers.guru-pdf-ui.rule=Host(`pdf.gurudhara.sbs`)"
+      - "traefik.http.routers.guru-pdf-ui.entrypoints=websecure"
+      - "traefik.http.routers.guru-pdf-ui.tls=true"
+      - "traefik.http.routers.guru-pdf-ui.tls.certresolver=mytlschallenge"
+      - "traefik.http.routers.guru-pdf-ui.priority=100"
+      - "traefik.http.services.guru-pdf-ui.loadbalancer.server.port=8502"
+    networks:
+      - default
+      - n8n_default
     depends_on:
       api:
         condition: service_healthy
     restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: guru-auth-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:?POSTGRES_DB is required}
+      POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER is required}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+    volumes:
+      - postgres_auth_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    shm_size: 128mb
+    mem_limit: 768m
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.8.2
+    container_name: guru-keycloak
+    restart: unless-stopped
+    command: ["start", "--http-port=8080"]
+    environment:
+      KC_DB: postgres
+      KC_DB_URL_HOST: postgres
+      KC_DB_URL_DATABASE: ${KEYCLOAK_DB_NAME:?KEYCLOAK_DB_NAME is required}
+      KC_DB_USERNAME: ${KEYCLOAK_DB_USER:?KEYCLOAK_DB_USER is required}
+      KC_DB_PASSWORD: ${KEYCLOAK_DB_PASSWORD:?KEYCLOAK_DB_PASSWORD is required}
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KEYCLOAK_ADMIN_USER:?KEYCLOAK_ADMIN_USER is required}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:?KEYCLOAK_ADMIN_PASSWORD is required}
+      KC_HEALTH_ENABLED: "true"
+      KC_HTTP_ENABLED: "true"
+      KC_HOSTNAME: "https://auth.gurudhara.sbs"
+      KC_PROXY_HEADERS: "xforwarded"
+      JAVA_OPTS_KC_HEAP: "-XX:MaxRAMPercentage=60"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=n8n_default"
+      - "traefik.http.routers.guru-keycloak.rule=Host(`auth.gurudhara.sbs`)"
+      - "traefik.http.routers.guru-keycloak.entrypoints=websecure"
+      - "traefik.http.routers.guru-keycloak.tls=true"
+      - "traefik.http.routers.guru-keycloak.tls.certresolver=mytlschallenge"
+      - "traefik.http.services.guru-keycloak.loadbalancer.server.port=8080"
+    networks:
+      - default
+      - n8n_default
+    ports:
+      - "127.0.0.1:18080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    mem_limit: 1536m
+
+volumes:
+  postgres_auth_data:
+
+networks:
+  n8n_default:
+    external: true

@@ -11,3 +11,6 @@ storage/**
 !storage/.gitkeep
 *.log
 .DS_Store
+
+# Streamlit authentication secrets
+.streamlit/secrets.toml
