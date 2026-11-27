@@ -1,0 +1,180 @@
+{
+  "name": "Google Sheets Automation",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "744530c4-258a-4732-afa4-2f4641d924cf",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "16mwT8lmEMCl8b6I6wbU3xFIim0gL6gMGmchYKtLifXI",
+          "mode": "list",
+          "cachedResultName": "Student_Course_Records",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16mwT8lmEMCl8b6I6wbU3xFIim0gL6gMGmchYKtLifXI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16mwT8lmEMCl8b6I6wbU3xFIim0gL6gMGmchYKtLifXI/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        224,
+        0
+      ],
+      "id": "33ff3cd3-3ce6-436e-be3b-840238df2a42",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "yVMv2mTyxXhBRMIw",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 4
+          },
+          "conditions": [
+            {
+              "id": "8ab5e663-adca-43d3-bc88-8d303e48499c",
+              "leftValue": "={{ $json.Name }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.4,
+      "position": [
+        448,
+        0
+      ],
+      "id": "27637284-6149-41a8-ae30-61f901815426",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\nconst rowsText = items.map((item, index) => {\n  const data = item.json;\n  return `${index + 1}. Name: ${data.Name || 'N/A'}\\n   Course: ${data.Course || 'N/A'}\\n   Status: ${data.Status || 'N/A'}`;\n}).join('\\n\\n');\n\nconst subject = 'Data Summary from Google Sheet';\n\nconst body = [\n  'Hi,',\n  '',\n  'Here is the latest data from the sheet:',\n  '',\n  rowsText,\n  '',\n  'Regards,',\n  'Your Automation Bot'\n].join('\\n');\n\nreturn [\n  {\n    json: {\n      subject,\n      body\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        -96
+      ],
+      "id": "815c7676-3e5e-4aa1-8658-b73c77d0c2cc",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "sendTo": "srigururajadhara@gmail.com",
+        "subject": "={{ $json.subject }}",
+        "emailType": "text",
+        "message": "={{ $json.body }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        880,
+        48
+      ],
+      "id": "22a8036f-376c-4dda-be20-0d58a14e45e1",
+      "name": "Send a message",
+      "webhookId": "403b2d7a-4777-41ca-9df9-6784e33469c6",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "ShGuHq0QZstNtvVv",
+          "name": "srigururajadhara"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "ee821898-41f2-4ded-afa6-9e6241b6ad01",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "36254206f6f51d304338b8f82ca510693dd9aa7edeedde53041d7c7858e19807"
+  },
+  "nodeGroups": [],
+  "id": "QdHYxeCNjJD2EP2P",
+  "tags": []
+}
